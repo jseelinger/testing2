@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCI Fitness</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-item active" data-page="home">
+            <span class="material-icons-round">home</span>
+            <span>Home</span>
+        </button>
+        <button class="nav-item" data-page="bmi">
+            <span class="material-icons-round">monitor_weight</span>
+            <span>BMI</span>
+        </button>
+        <button class="nav-item" data-page="tdee">
+            <span class="material-icons-round">local_fire_department</span>
+            <span>Kalorien</span>
+        </button>
+        <button class="nav-item" data-page="macros">
+            <span class="material-icons-round">restaurant</span>
+            <span>Makros</span>
+        </button>
+        <button class="nav-item" data-page="training">
+            <span class="material-icons-round">fitness_center</span>
+            <span>Training</span>
+        </button>
+        <button class="nav-item" data-page="progress">
+            <span class="material-icons-round">trending_up</span>
+            <span>Fortschritt</span>
+        </button>
+    </nav>
+
+    <!-- ==================== HOME ==================== -->
+    <div class="page active" id="page-home">
+        <div class="container">
+            <div class="header-section">
+                <h1 class="brand">MCI</h1>
+                <p class="subtitle">Dein Personal Training & AI</p>
+            </div>
+
+            <div class="gradient-card">
+                <h2>Willkommen!</h2>
+                <p>Starte jetzt mit deinem personalisierten Fitness-Plan. Berechne deine Werte und erreiche deine Ziele.</p>
+            </div>
+
+            <h3 class="section-title">Rechner</h3>
+
+            <div class="feature-card" onclick="navigateTo('bmi')">
+                <div class="feature-icon"><span class="material-icons-round">monitor_weight</span></div>
+                <div class="feature-text">
+                    <strong>BMI Rechner</strong>
+                    <span>Body Mass Index berechnen</span>
+                </div>
+                <span class="material-icons-round chevron">chevron_right</span>
+            </div>
+
+            <div class="feature-card" onclick="navigateTo('tdee')">
+                <div class="feature-icon"><span class="material-icons-round">local_fire_department</span></div>
+                <div class="feature-text">
+                    <strong>Kalorienbedarf (TDEE)</strong>
+                    <span>Täglichen Energieumsatz berechnen</span>
+                </div>
+                <span class="material-icons-round chevron">chevron_right</span>
+            </div>
+
+            <div class="feature-card" onclick="navigateTo('macros')">
+                <div class="feature-icon"><span class="material-icons-round">restaurant</span></div>
+                <div class="feature-text">
+                    <strong>Makronährstoffe</strong>
+                    <span>Protein, Kohlenhydrate & Fett</span>
+                </div>
+                <span class="material-icons-round chevron">chevron_right</span>
+            </div>
+
+            <h3 class="section-title">Training & Fortschritt</h3>
+
+            <div class="feature-card" onclick="navigateTo('training')">
+                <div class="feature-icon"><span class="material-icons-round">fitness_center</span></div>
+                <div class="feature-text">
+                    <strong>Trainingsplan</strong>
+                    <span>Personalisierter Wochenplan</span>
+                </div>
+                <span class="material-icons-round chevron">chevron_right</span>
+            </div>
+
+            <div class="feature-card" onclick="navigateTo('progress')">
+                <div class="feature-icon"><span class="material-icons-round">trending_up</span></div>
+                <div class="feature-text">
+                    <strong>Fortschritt</strong>
+                    <span>Gewicht & Erfolge tracken</span>
+                </div>
+                <span class="material-icons-round chevron">chevron_right</span>
+            </div>
+
+            <div class="feature-card" onclick="navigateTo('sources')">
+                <div class="feature-icon"><span class="material-icons-round">menu_book</span></div>
+                <div class="feature-text">
+                    <strong>Wissenschaftliche Quellen</strong>
+                    <span>Berechnungsgrundlagen & Referenzen</span>
+                </div>
+                <span class="material-icons-round chevron">chevron_right</span>
+            </div>
+
+            <div class="footer">
+                <p>MCI Fitness</p>
+                <p class="footer-sub">Inspiriert von mcisolutions.de</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== BMI ==================== -->
+    <div class="page" id="page-bmi">
+        <div class="container">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <span class="material-icons-round">arrow_back</span>
+                </button>
+                <h2>BMI Rechner</h2>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title orange">Body Mass Index</h3>
+                <p class="card-desc">Der BMI bewertet das Verhältnis von Körpergewicht zur Körpergröße. Formel: BMI = Gewicht(kg) / Größe(m)²</p>
+            </div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label>Gewicht</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="bmi-weight" value="75" min="30" max="300" step="0.1">
+                        <span class="input-suffix">kg</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Größe</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="bmi-height" value="175" min="100" max="250" step="0.1">
+                        <span class="input-suffix">cm</span>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="calculateBmi()">Berechnen</button>
+            </div>
+
+            <div id="bmi-result" class="hidden">
+                <div class="card result-card">
+                    <h3>Ergebnis</h3>
+                    <div class="bmi-value-container">
+                        <span id="bmi-value" class="big-value">0</span>
+                        <div id="bmi-category" class="category-badge">-</div>
+                    </div>
+
+                    <div class="bmi-scale">
+                        <h4>BMI Klassifikation (WHO)</h4>
+                        <div class="scale-row"><span class="dot" style="background:#FFC107"></span><span class="range">< 18.5</span><span>Untergewicht</span></div>
+                        <div class="scale-row"><span class="dot" style="background:#66BB6A"></span><span class="range">18.5 – 24.9</span><span>Normalgewicht</span></div>
+                        <div class="scale-row"><span class="dot" style="background:#FFC107"></span><span class="range">25.0 – 29.9</span><span>Übergewicht</span></div>
+                        <div class="scale-row"><span class="dot" style="background:#FF6E40"></span><span class="range">30.0 – 34.9</span><span>Adipositas I</span></div>
+                        <div class="scale-row"><span class="dot" style="background:#E53935"></span><span class="range">≥ 35.0</span><span>Adipositas II+</span></div>
+                    </div>
+                </div>
+                <p class="source-note">Quelle: WHO Global Database on Body Mass Index</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TDEE ==================== -->
+    <div class="page" id="page-tdee">
+        <div class="container">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <span class="material-icons-round">arrow_back</span>
+                </button>
+                <h2>Kalorienbedarf</h2>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title orange">TDEE Rechner</h3>
+                <p class="card-desc">Berechnung nach der Mifflin-St Jeor Gleichung – die genaueste Formel für den Grundumsatz (BMR). Der TDEE ergibt sich aus BMR × Aktivitätsfaktor.</p>
+            </div>
+
+            <div class="card">
+                <label class="input-label">Geschlecht</label>
+                <div class="toggle-group">
+                    <button class="toggle-btn active" data-gender="male" onclick="selectGender('male')">Männlich</button>
+                    <button class="toggle-btn" data-gender="female" onclick="selectGender('female')">Weiblich</button>
+                </div>
+
+                <div class="input-group">
+                    <label>Alter</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="tdee-age" value="25" min="14" max="100">
+                        <span class="input-suffix">Jahre</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Gewicht</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="tdee-weight" value="75" min="30" max="300" step="0.1">
+                        <span class="input-suffix">kg</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Größe</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="tdee-height" value="175" min="100" max="250" step="0.1">
+                        <span class="input-suffix">cm</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4 class="card-subtitle">Aktivitätslevel</h4>
+                <div class="radio-group" id="activity-level">
+                    <label class="radio-option" onclick="selectActivity(1.2)">
+                        <input type="radio" name="activity" value="1.2">
+                        <div class="radio-content">
+                            <strong>Sitzend (kaum Bewegung)</strong>
+                            <span>Faktor: 1.2</span>
+                        </div>
+                    </label>
+                    <label class="radio-option" onclick="selectActivity(1.375)">
+                        <input type="radio" name="activity" value="1.375">
+                        <div class="radio-content">
+                            <strong>Leicht aktiv (1-3x/Woche)</strong>
+                            <span>Faktor: 1.375</span>
+                        </div>
+                    </label>
+                    <label class="radio-option selected" onclick="selectActivity(1.55)">
+                        <input type="radio" name="activity" value="1.55" checked>
+                        <div class="radio-content">
+                            <strong>Moderat aktiv (3-5x/Woche)</strong>
+                            <span>Faktor: 1.55</span>
+                        </div>
+                    </label>
+                    <label class="radio-option" onclick="selectActivity(1.725)">
+                        <input type="radio" name="activity" value="1.725">
+                        <div class="radio-content">
+                            <strong>Sehr aktiv (6-7x/Woche)</strong>
+                            <span>Faktor: 1.725</span>
+                        </div>
+                    </label>
+                    <label class="radio-option" onclick="selectActivity(1.9)">
+                        <input type="radio" name="activity" value="1.9">
+                        <div class="radio-content">
+                            <strong>Extrem aktiv (2x täglich)</strong>
+                            <span>Faktor: 1.9</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4 class="card-subtitle">Ziel</h4>
+                <div class="radio-group" id="tdee-goal">
+                    <label class="radio-option" onclick="selectTdeeGoal('lose')">
+                        <input type="radio" name="tdee-goal" value="lose">
+                        <div class="radio-content">
+                            <strong>Abnehmen</strong>
+                            <span>-500 kcal/Tag</span>
+                        </div>
+                    </label>
+                    <label class="radio-option selected" onclick="selectTdeeGoal('maintain')">
+                        <input type="radio" name="tdee-goal" value="maintain" checked>
+                        <div class="radio-content">
+                            <strong>Gewicht halten</strong>
+                            <span>±0 kcal/Tag</span>
+                        </div>
+                    </label>
+                    <label class="radio-option" onclick="selectTdeeGoal('gain')">
+                        <input type="radio" name="tdee-goal" value="gain">
+                        <div class="radio-content">
+                            <strong>Muskelaufbau</strong>
+                            <span>+300 kcal/Tag</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="calculateTdee()">Berechnen</button>
+
+            <div id="tdee-result" class="hidden">
+                <div class="gradient-card">
+                    <span class="result-label">Dein täglicher Bedarf</span>
+                    <span id="tdee-target" class="result-big">0 kcal</span>
+                    <span id="tdee-goal-label" class="result-sub">Ziel: Gewicht halten</span>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <span id="tdee-bmr" class="stat-value">0</span>
+                        <span class="stat-label">Grundumsatz (kcal)</span>
+                    </div>
+                    <div class="stat-box">
+                        <span id="tdee-total" class="stat-value amber">0</span>
+                        <span class="stat-label">TDEE (kcal)</span>
+                    </div>
+                </div>
+                <p class="source-note">Quelle: Mifflin-St Jeor Equation (1990)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MACROS ==================== -->
+    <div class="page" id="page-macros">
+        <div class="container">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <span class="material-icons-round">arrow_back</span>
+                </button>
+                <h2>Makronährstoffe</h2>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title orange">Makro-Verteilung</h3>
+                <p class="card-desc">Optimale Verteilung von Protein, Kohlenhydraten und Fett basierend auf deinem Kalorienbedarf und Trainingsziel.</p>
+            </div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label>Tägliche Kalorien</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="macro-calories" value="2200" min="800" max="8000">
+                        <span class="input-suffix">kcal</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Körpergewicht</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="macro-weight" value="75" min="30" max="300" step="0.1">
+                        <span class="input-suffix">kg</span>
+                    </div>
+                </div>
+
+                <label class="input-label">Ziel</label>
+                <div class="toggle-group triple">
+                    <button class="toggle-btn" data-macro-goal="lose" onclick="selectMacroGoal('lose')">Abnehmen</button>
+                    <button class="toggle-btn active" data-macro-goal="maintain" onclick="selectMacroGoal('maintain')">Halten</button>
+                    <button class="toggle-btn" data-macro-goal="gain" onclick="selectMacroGoal('gain')">Aufbau</button>
+                </div>
+
+                <button class="btn-primary" onclick="calculateMacros()">Berechnen</button>
+            </div>
+
+            <div id="macro-result" class="hidden">
+                <div class="card">
+                    <h4 class="card-subtitle">Verteilung</h4>
+                    <div class="donut-container">
+                        <canvas id="macroChart" width="200" height="200"></canvas>
+                        <div class="donut-center">
+                            <span id="macro-total-cal" class="donut-value">0</span>
+                            <span class="donut-label">kcal</span>
+                        </div>
+                    </div>
+                    <div class="macro-legend">
+                        <div class="macro-row">
+                            <span class="dot" style="background:#FF6E40"></span>
+                            <span class="macro-name">Protein</span>
+                            <span id="macro-protein-g" class="macro-grams">0g</span>
+                            <span id="macro-protein-pct" class="macro-pct orange">0%</span>
+                        </div>
+                        <div class="macro-row">
+                            <span class="dot" style="background:#FFAA00"></span>
+                            <span class="macro-name">Kohlenhydrate</span>
+                            <span id="macro-carbs-g" class="macro-grams">0g</span>
+                            <span id="macro-carbs-pct" class="macro-pct amber">0%</span>
+                        </div>
+                        <div class="macro-row">
+                            <span class="dot" style="background:#66BB6A"></span>
+                            <span class="macro-name">Fett</span>
+                            <span id="macro-fat-g" class="macro-grams">0g</span>
+                            <span id="macro-fat-pct" class="macro-pct green">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="source-note">Quellen: ISSN Position Stand (Jäger et al., 2017), DGE</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TRAINING ==================== -->
+    <div class="page" id="page-training">
+        <div class="container">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <span class="material-icons-round">arrow_back</span>
+                </button>
+                <h2>Trainingsplan</h2>
+            </div>
+
+            <div class="card">
+                <h4 class="card-subtitle">Trainingsziel</h4>
+                <div class="toggle-group triple">
+                    <button class="toggle-btn" data-train-goal="lose" onclick="selectTrainGoal('lose')">Abnehmen</button>
+                    <button class="toggle-btn" data-train-goal="maintain" onclick="selectTrainGoal('maintain')">Halten</button>
+                    <button class="toggle-btn active" data-train-goal="gain" onclick="selectTrainGoal('gain')">Aufbau</button>
+                </div>
+            </div>
+
+            <div id="training-plan"></div>
+
+            <p class="source-note">Quelle: Empfehlungen basierend auf ACSM Guidelines for Exercise Testing</p>
+        </div>
+    </div>
+
+    <!-- ==================== PROGRESS ==================== -->
+    <div class="page" id="page-progress">
+        <div class="container">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <span class="material-icons-round">arrow_back</span>
+                </button>
+                <h2>Fortschritt</h2>
+            </div>
+
+            <div id="progress-stats" class="stats-row"></div>
+
+            <div class="card" id="progress-chart-card">
+                <h4 class="card-subtitle">Gewichtsverlauf</h4>
+                <canvas id="progressChart" width="600" height="250"></canvas>
+            </div>
+
+            <div class="card">
+                <div class="progress-header">
+                    <h4 class="card-subtitle">Neuer Eintrag</h4>
+                </div>
+                <div class="input-row">
+                    <div class="input-group compact">
+                        <label>Gewicht</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="progress-weight" placeholder="kg" step="0.1">
+                            <span class="input-suffix">kg</span>
+                        </div>
+                    </div>
+                    <div class="input-group compact">
+                        <label>Notiz</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="progress-note" placeholder="Optional...">
+                        </div>
+                    </div>
+                    <button class="btn-icon" onclick="addProgressEntry()">
+                        <span class="material-icons-round">add</span>
+                    </button>
+                </div>
+            </div>
+
+            <h3 class="section-title">Einträge</h3>
+            <div id="progress-entries"></div>
+        </div>
+    </div>
+
+    <!-- ==================== SOURCES ==================== -->
+    <div class="page" id="page-sources">
+        <div class="container">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <span class="material-icons-round">arrow_back</span>
+                </button>
+                <h2>Wissenschaftliche Quellen</h2>
+            </div>
+
+            <p class="intro-text">Alle Berechnungen in dieser App basieren auf wissenschaftlich validierten Formeln und Empfehlungen anerkannter Organisationen.</p>
+
+            <!-- BMI -->
+            <div class="card source-card">
+                <h3 class="card-title orange">BMI – Body Mass Index</h3>
+                <div class="formula-box">BMI = Gewicht (kg) / Größe (m)²</div>
+                <div class="source-entry">
+                    <strong>World Health Organization (WHO)</strong>
+                    <p>Global Database on Body Mass Index – BMI Classification</p>
+                    <a class="source-link">who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index</a>
+                </div>
+                <div class="source-entry">
+                    <strong>WHO Expert Consultation</strong>
+                    <p>Appropriate body-mass index for Asian populations and its implications for policy and intervention strategies. The Lancet, 2004; 363(9403): 157-163</p>
+                </div>
+            </div>
+
+            <!-- BMR -->
+            <div class="card source-card">
+                <h3 class="card-title orange">BMR – Grundumsatz (Mifflin-St Jeor)</h3>
+                <div class="formula-box">Männer: BMR = (10 × kg) + (6.25 × cm) - (5 × Alter) + 5
+Frauen: BMR = (10 × kg) + (6.25 × cm) - (5 × Alter) - 161</div>
+                <div class="source-entry">
+                    <strong>Mifflin MD, St Jeor ST, Hill LA, Scott BJ, Daugherty SA, Koh YO</strong>
+                    <p>A new predictive equation for resting energy expenditure in healthy individuals. American Journal of Clinical Nutrition, 1990; 51(2): 241-247</p>
+                    <a class="source-link">doi.org/10.1093/ajcn/51.2.241</a>
+                </div>
+                <div class="source-entry">
+                    <strong>Frankenfield D, Roth-Yousey L, Compher C</strong>
+                    <p>Comparison of predictive equations for resting metabolic rate in healthy nonobese and obese adults. JADA, 2005; 105(5): 775-789</p>
+                    <a class="source-link">doi.org/10.1016/j.jada.2005.02.005</a>
+                </div>
+            </div>
+
+            <!-- TDEE -->
+            <div class="card source-card">
+                <h3 class="card-title orange">TDEE – Aktivitätsfaktoren</h3>
+                <div class="formula-box">TDEE = BMR × Aktivitätsfaktor
+Sitzend: 1.2 | Leicht aktiv: 1.375 | Moderat: 1.55
+Sehr aktiv: 1.725 | Extrem aktiv: 1.9</div>
+                <div class="source-entry">
+                    <strong>Harris JA, Benedict FG</strong>
+                    <p>A Biometric Study of Human Basal Metabolism. Proc Natl Acad Sci, 1918; 4(12): 370-373</p>
+                    <a class="source-link">doi.org/10.1073/pnas.4.12.370</a>
+                </div>
+                <div class="source-entry">
+                    <strong>Roza AM, Shizgal HM</strong>
+                    <p>The Harris Benedict equation reevaluated: resting energy requirements and the body cell mass. Am J Clin Nutr, 1984; 40(1): 168-182</p>
+                </div>
+            </div>
+
+            <!-- Macros -->
+            <div class="card source-card">
+                <h3 class="card-title orange">Makronährstoffe</h3>
+                <div class="formula-box">Protein: 1.6-2.2 g/kg (je nach Ziel)
+Fett: 25-30% der Gesamtkalorien
+Kohlenhydrate: Restliche Kalorien
+1g Protein = 4 kcal | 1g KH = 4 kcal | 1g Fett = 9 kcal</div>
+                <div class="source-entry">
+                    <strong>Jäger R, Kerksick CM, Campbell BI, et al.</strong>
+                    <p>International Society of Sports Nutrition Position Stand: protein and exercise. JISSN, 2017; 14: 20</p>
+                    <a class="source-link">doi.org/10.1186/s12970-017-0177-8</a>
+                </div>
+                <div class="source-entry">
+                    <strong>Deutsche Gesellschaft für Ernährung (DGE)</strong>
+                    <p>Referenzwerte für die Nährstoffzufuhr. Bonn, 2. Auflage, 5. aktualisierte Ausgabe (2019)</p>
+                    <a class="source-link">dge.de/wissenschaft/referenzwerte/</a>
+                </div>
+                <div class="source-entry">
+                    <strong>Morton RW, Murphy KT, McKellar SR, et al.</strong>
+                    <p>A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains. Br J Sports Med, 2018; 52(6): 376-384</p>
+                    <a class="source-link">doi.org/10.1136/bjsports-2017-097608</a>
+                </div>
+            </div>
+
+            <!-- Training -->
+            <div class="card source-card">
+                <h3 class="card-title orange">Trainingsempfehlungen</h3>
+                <div class="source-entry">
+                    <strong>American College of Sports Medicine (ACSM)</strong>
+                    <p>ACSM's Guidelines for Exercise Testing and Prescription, 11th Edition. Wolters Kluwer, 2021</p>
+                </div>
+                <div class="source-entry">
+                    <strong>Schoenfeld BJ, Ogborn D, Krieger JW</strong>
+                    <p>Dose-response relationship between weekly resistance training volume and increases in muscle mass. J Sports Sci, 2017; 35(11): 1073-1082</p>
+                    <a class="source-link">doi.org/10.1080/02640414.2016.1210197</a>
+                </div>
+                <div class="source-entry">
+                    <strong>Schoenfeld BJ, Grgic J, Van Every DW, Plotkin DL</strong>
+                    <p>Loading Recommendations for Muscle Strength, Hypertrophy, and Local Endurance. Sports, 2021; 9(2): 32</p>
+                    <a class="source-link">doi.org/10.3390/sports9020032</a>
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="card disclaimer-card">
+                <h4 class="amber">Hinweis</h4>
+                <p>Diese App dient ausschließlich zu Informationszwecken und ersetzt keine professionelle medizinische oder ernährungswissenschaftliche Beratung. Bei gesundheitlichen Fragen wende dich bitte an qualifiziertes Fachpersonal. Die Berechnungen sind Schätzungen und können individuell abweichen.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/calculations.js"></script>
+    <script src="js/training.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
