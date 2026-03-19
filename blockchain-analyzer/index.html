@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChainScope - Blockchain Intelligence Platform</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="18" stroke="#00d4ff" stroke-width="2"/>
+                    <circle cx="20" cy="12" r="3" fill="#00d4ff"/>
+                    <circle cx="12" cy="24" r="3" fill="#00d4ff"/>
+                    <circle cx="28" cy="24" r="3" fill="#00d4ff"/>
+                    <line x1="20" y1="15" x2="14" y2="22" stroke="#00d4ff" stroke-width="1.5"/>
+                    <line x1="20" y1="15" x2="26" y2="22" stroke="#00d4ff" stroke-width="1.5"/>
+                    <line x1="15" y1="24" x2="25" y2="24" stroke="#00d4ff" stroke-width="1.5"/>
+                </svg>
+                <span class="logo-text">ChainScope</span>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active" data-page="dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                <span>Dashboard</span>
+            </li>
+            <li class="nav-item" data-page="explorer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <span>Transaction Explorer</span>
+            </li>
+            <li class="nav-item" data-page="wallets">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 010-4h14v4"/><path d="M3 5v14a2 2 0 002 2h16v-5"/><path d="M18 12a2 2 0 000 4h4v-4h-4z"/></svg>
+                <span>Wallet-Analyse</span>
+            </li>
+            <li class="nav-item" data-page="flowview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v6m0 0l6-6m0 0h6"/></svg>
+                <span>Flow Visualisierung</span>
+            </li>
+            <li class="nav-item" data-page="risk">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                <span>Risk Scoring</span>
+            </li>
+            <li class="nav-item" data-page="alerts">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                <span>Alerts</span>
+                <span class="badge" id="alert-badge">3</span>
+            </li>
+            <li class="nav-item" data-page="reports">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>Reports</span>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="network-selector">
+                <select id="network-select">
+                    <option value="bitcoin">Bitcoin</option>
+                    <option value="ethereum">Ethereum</option>
+                    <option value="bsc">BSC</option>
+                    <option value="polygon">Polygon</option>
+                    <option value="solana">Solana</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+                <div class="global-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <input type="text" id="global-search" placeholder="Adresse, TX-Hash oder ENS-Name suchen..." autocomplete="off">
+                    <kbd>Ctrl+K</kbd>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="live-indicator">
+                    <span class="pulse"></span>
+                    <span>Live</span>
+                </div>
+                <div class="network-stats">
+                    <span id="btc-price" class="stat-chip">BTC $68,432</span>
+                    <span id="eth-price" class="stat-chip">ETH $3,891</span>
+                    <span id="gas-price" class="stat-chip gas">Gas: 24 Gwei</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Container -->
+        <div id="page-container" class="page-container">
+            <!-- Dashboard Page -->
+            <div id="page-dashboard" class="page active">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <div class="time-filter">
+                        <button class="time-btn" data-range="1h">1H</button>
+                        <button class="time-btn active" data-range="24h">24H</button>
+                        <button class="time-btn" data-range="7d">7D</button>
+                        <button class="time-btn" data-range="30d">30D</button>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Transaktionen (24h)</span>
+                            <span class="kpi-value" id="kpi-tx">1,284,392</span>
+                            <span class="kpi-change positive">+12.4%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Volumen (24h)</span>
+                            <span class="kpi-value" id="kpi-volume">$48.2B</span>
+                            <span class="kpi-change positive">+8.7%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Flagged TXs</span>
+                            <span class="kpi-value" id="kpi-flagged">847</span>
+                            <span class="kpi-change negative">+23.1%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Aktive Wallets</span>
+                            <span class="kpi-value" id="kpi-wallets">892,441</span>
+                            <span class="kpi-change positive">+5.2%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card wide">
+                        <div class="chart-header">
+                            <h3>Transaktionsvolumen</h3>
+                            <div class="chart-legend">
+                                <span class="legend-item"><span class="dot blue"></span>Bitcoin</span>
+                                <span class="legend-item"><span class="dot green"></span>Ethereum</span>
+                            </div>
+                        </div>
+                        <canvas id="volume-chart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Risiko-Verteilung</h3>
+                        </div>
+                        <canvas id="risk-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Top Verdächtige Adressen</h3>
+                            <a href="#" class="view-all" data-page="risk">Alle anzeigen</a>
+                        </div>
+                        <div class="suspicious-list" id="suspicious-list"></div>
+                    </div>
+                    <div class="chart-card wide">
+                        <div class="chart-header">
+                            <h3>Live Transaktionen</h3>
+                            <div class="live-indicator small">
+                                <span class="pulse"></span>
+                                <span>Echtzeit</span>
+                            </div>
+                        </div>
+                        <div class="live-tx-feed" id="live-tx-feed"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction Explorer Page -->
+            <div id="page-explorer" class="page">
+                <div class="page-header">
+                    <h1>Transaction Explorer</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" id="export-csv">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            CSV Export
+                        </button>
+                    </div>
+                </div>
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label>Min. Betrag</label>
+                        <input type="number" id="filter-min-amount" placeholder="0.0" step="0.01">
+                    </div>
+                    <div class="filter-group">
+                        <label>Max. Betrag</label>
+                        <input type="number" id="filter-max-amount" placeholder="999999" step="0.01">
+                    </div>
+                    <div class="filter-group">
+                        <label>Risiko-Level</label>
+                        <select id="filter-risk">
+                            <option value="all">Alle</option>
+                            <option value="critical">Kritisch</option>
+                            <option value="high">Hoch</option>
+                            <option value="medium">Mittel</option>
+                            <option value="low">Niedrig</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Zeitraum</label>
+                        <select id="filter-time">
+                            <option value="1h">Letzte Stunde</option>
+                            <option value="24h" selected>Letzte 24h</option>
+                            <option value="7d">Letzte 7 Tage</option>
+                            <option value="30d">Letzte 30 Tage</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="apply-filters">Filter anwenden</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table" id="tx-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="hash">TX Hash</th>
+                                <th class="sortable" data-sort="from">Von</th>
+                                <th class="sortable" data-sort="to">An</th>
+                                <th class="sortable" data-sort="amount">Betrag</th>
+                                <th class="sortable" data-sort="time">Zeit</th>
+                                <th class="sortable" data-sort="risk">Risiko</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tx-table-body"></tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="tx-pagination"></div>
+            </div>
+
+            <!-- Wallet Analysis Page -->
+            <div id="page-wallets" class="page">
+                <div class="page-header">
+                    <h1>Wallet-Analyse</h1>
+                </div>
+                <div class="wallet-search-section">
+                    <div class="wallet-search-box">
+                        <input type="text" id="wallet-search" placeholder="Wallet-Adresse eingeben (z.B. 0x742d35Cc...)">
+                        <button class="btn btn-primary" id="analyze-wallet">Analysieren</button>
+                    </div>
+                </div>
+                <div id="wallet-result" class="wallet-result hidden">
+                    <div class="wallet-header-card">
+                        <div class="wallet-identity">
+                            <div class="wallet-avatar" id="wallet-avatar"></div>
+                            <div class="wallet-info">
+                                <h2 id="wallet-address-display"></h2>
+                                <div class="wallet-tags" id="wallet-tags"></div>
+                            </div>
+                        </div>
+                        <div class="wallet-risk-score" id="wallet-risk-display"></div>
+                    </div>
+                    <div class="wallet-stats-grid">
+                        <div class="wallet-stat">
+                            <span class="stat-label">Balance</span>
+                            <span class="stat-value" id="wallet-balance">--</span>
+                        </div>
+                        <div class="wallet-stat">
+                            <span class="stat-label">Total Received</span>
+                            <span class="stat-value" id="wallet-received">--</span>
+                        </div>
+                        <div class="wallet-stat">
+                            <span class="stat-label">Total Sent</span>
+                            <span class="stat-value" id="wallet-sent">--</span>
+                        </div>
+                        <div class="wallet-stat">
+                            <span class="stat-label">TX Count</span>
+                            <span class="stat-value" id="wallet-tx-count">--</span>
+                        </div>
+                        <div class="wallet-stat">
+                            <span class="stat-label">Erster TX</span>
+                            <span class="stat-value" id="wallet-first-tx">--</span>
+                        </div>
+                        <div class="wallet-stat">
+                            <span class="stat-label">Letzter TX</span>
+                            <span class="stat-value" id="wallet-last-tx">--</span>
+                        </div>
+                    </div>
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Aktivitätsverlauf</h3>
+                            </div>
+                            <canvas id="wallet-activity-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Interaktions-Cluster</h3>
+                            </div>
+                            <div id="wallet-cluster" class="cluster-view"></div>
+                        </div>
+                    </div>
+                    <div class="chart-card full-width">
+                        <div class="chart-header">
+                            <h3>Transaktionshistorie</h3>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>TX Hash</th>
+                                        <th>Richtung</th>
+                                        <th>Gegenpartei</th>
+                                        <th>Betrag</th>
+                                        <th>Zeit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet-tx-history"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flow Visualization Page -->
+            <div id="page-flowview" class="page">
+                <div class="page-header">
+                    <h1>Flow Visualisierung</h1>
+                    <div class="header-actions">
+                        <div class="flow-controls">
+                            <button class="btn btn-icon" id="flow-zoom-in" title="Zoom In">+</button>
+                            <button class="btn btn-icon" id="flow-zoom-out" title="Zoom Out">-</button>
+                            <button class="btn btn-icon" id="flow-reset" title="Reset">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 019-9 9.75 9.75 0 016.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9.75 9.75 0 01-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-container">
+                    <div class="flow-sidebar">
+                        <div class="flow-input-group">
+                            <label>Start-Adresse</label>
+                            <input type="text" id="flow-start-address" placeholder="0x742d35Cc...">
+                        </div>
+                        <div class="flow-input-group">
+                            <label>Tiefe</label>
+                            <select id="flow-depth">
+                                <option value="1">1 Hop</option>
+                                <option value="2" selected>2 Hops</option>
+                                <option value="3">3 Hops</option>
+                                <option value="4">4 Hops</option>
+                            </select>
+                        </div>
+                        <div class="flow-input-group">
+                            <label>Min. Betrag</label>
+                            <input type="number" id="flow-min-amount" placeholder="0.1" value="0.1" step="0.1">
+                        </div>
+                        <button class="btn btn-primary full-width" id="trace-flow">Flow tracen</button>
+                        <div class="flow-legend">
+                            <h4>Legende</h4>
+                            <div class="legend-entry"><span class="node-dot exchange"></span> Exchange</div>
+                            <div class="legend-entry"><span class="node-dot mixer"></span> Mixer/Tumbler</div>
+                            <div class="legend-entry"><span class="node-dot defi"></span> DeFi Protocol</div>
+                            <div class="legend-entry"><span class="node-dot unknown"></span> Unbekannt</div>
+                            <div class="legend-entry"><span class="node-dot flagged"></span> Flagged</div>
+                        </div>
+                    </div>
+                    <div class="flow-canvas-wrapper">
+                        <canvas id="flow-canvas"></canvas>
+                        <div id="flow-tooltip" class="flow-tooltip hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Scoring Page -->
+            <div id="page-risk" class="page">
+                <div class="page-header">
+                    <h1>Risk Scoring</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" id="export-risk-report">Report exportieren</button>
+                    </div>
+                </div>
+                <div class="risk-overview">
+                    <div class="risk-meter-card">
+                        <h3>Netzwerk-Risikostatus</h3>
+                        <div class="risk-meter">
+                            <canvas id="risk-meter-canvas"></canvas>
+                            <div class="risk-meter-value">
+                                <span id="risk-meter-score">64</span>
+                                <span class="risk-meter-label">/ 100</span>
+                            </div>
+                        </div>
+                        <p class="risk-meter-desc">Erhöhtes Risiko - Ungewöhnliche Mixer-Aktivität erkannt</p>
+                    </div>
+                    <div class="risk-categories">
+                        <div class="risk-cat-card">
+                            <div class="risk-cat-header">
+                                <span class="risk-cat-name">Mixer/Tumbler</span>
+                                <span class="risk-cat-score critical">89</span>
+                            </div>
+                            <div class="risk-bar"><div class="risk-bar-fill critical" style="width: 89%"></div></div>
+                        </div>
+                        <div class="risk-cat-card">
+                            <div class="risk-cat-header">
+                                <span class="risk-cat-name">Darknet Markets</span>
+                                <span class="risk-cat-score high">72</span>
+                            </div>
+                            <div class="risk-bar"><div class="risk-bar-fill high" style="width: 72%"></div></div>
+                        </div>
+                        <div class="risk-cat-card">
+                            <div class="risk-cat-header">
+                                <span class="risk-cat-name">Ransomware</span>
+                                <span class="risk-cat-score medium">45</span>
+                            </div>
+                            <div class="risk-bar"><div class="risk-bar-fill medium" style="width: 45%"></div></div>
+                        </div>
+                        <div class="risk-cat-card">
+                            <div class="risk-cat-header">
+                                <span class="risk-cat-name">Sanktionierte Adressen</span>
+                                <span class="risk-cat-score high">68</span>
+                            </div>
+                            <div class="risk-bar"><div class="risk-bar-fill high" style="width: 68%"></div></div>
+                        </div>
+                        <div class="risk-cat-card">
+                            <div class="risk-cat-header">
+                                <span class="risk-cat-name">Scam/Phishing</span>
+                                <span class="risk-cat-score medium">51</span>
+                            </div>
+                            <div class="risk-bar"><div class="risk-bar-fill medium" style="width: 51%"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-card full-width">
+                    <div class="chart-header">
+                        <h3>Hochrisiko-Adressen</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="risk-table">
+                            <thead>
+                                <tr>
+                                    <th>Adresse</th>
+                                    <th>Risiko-Score</th>
+                                    <th>Kategorie</th>
+                                    <th>Volumen (30d)</th>
+                                    <th>Letzte Aktivität</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="risk-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts Page -->
+            <div id="page-alerts" class="page">
+                <div class="page-header">
+                    <h1>Alerts</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" id="create-alert-rule">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Neue Regel
+                        </button>
+                    </div>
+                </div>
+                <div class="alerts-container">
+                    <div class="alert-rules-section">
+                        <h3>Aktive Regeln</h3>
+                        <div id="alert-rules-list" class="alert-rules-list"></div>
+                    </div>
+                    <div class="alert-feed-section">
+                        <h3>Letzte Alerts</h3>
+                        <div id="alert-feed" class="alert-feed"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Page -->
+            <div id="page-reports" class="page">
+                <div class="page-header">
+                    <h1>Reports</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" id="generate-report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Report generieren
+                        </button>
+                    </div>
+                </div>
+                <div class="reports-grid" id="reports-grid"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div id="modal" class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title"></h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <div class="search-modal">
+            <div class="search-input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input type="text" id="search-modal-input" placeholder="Adresse, TX-Hash oder ENS suchen...">
+                <kbd>Esc</kbd>
+            </div>
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/flow.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
