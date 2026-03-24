@@ -67,6 +67,9 @@ let state = {
     currentDashboard: null
 };
 
+// Track managed dashboard windows
+let dashboardWindows = {};
+
 // ==================== DOM References ====================
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
@@ -78,9 +81,7 @@ const mainContent = $('#mainContent');
 const settingsModal = $('#settingsModal');
 const toast = $('#toast');
 const dashboardGrid = $('#dashboardGrid');
-const dashboardFrame = $('#dashboardFrame');
 const loadingBar = $('#loadingBar');
-const iframeError = $('#iframeError');
 
 // ==================== Storage ====================
 function loadSettings() {
@@ -114,10 +115,9 @@ function buildDashboardUrl(dashboard) {
     const baseUrl = state.serverUrl.replace(/\/+$/, '');
     const port = dashboard.portKey === 'cockpit' ? state.portCockpit : state.portWeb;
 
-    // Build URL with basic auth embedded for iframe usage
     let url = `${baseUrl}:${port}${dashboard.path}`;
 
-    // For iframe, we embed credentials in the URL if using https
+    // Embed credentials in URL for basic auth
     if (state.username && url.startsWith('https://')) {
         const encoded = encodeURIComponent(state.username) + ':' + encodeURIComponent(state.password);
         url = url.replace('https://', `https://${encoded}@`);
@@ -192,45 +192,13 @@ function openDashboard(dashboard) {
     state.currentDashboard = dashboard;
     showScreen('dashboard');
 
-    const url = buildDashboardUrl(dashboard);
     const cleanUrl = buildCleanUrl(dashboard);
 
     $('#dashboardName').textContent = dashboard.name;
     $('#dashboardUrl').textContent = cleanUrl;
 
-    // Show loading
-    loadingBar.classList.add('active');
-    iframeError.classList.remove('active');
-
-    // Load in iframe
-    dashboardFrame.src = url;
-
-    // Detect load errors (iframe won't fire onerror for X-Frame-Options)
-    // Use a timeout as fallback
-    const loadTimeout = setTimeout(() => {
-        loadingBar.classList.remove('active');
-        // Check if iframe loaded by trying to access it
-        try {
-            // This will throw if cross-origin or blocked
-            const doc = dashboardFrame.contentDocument;
-            if (!doc || !doc.body || doc.body.innerHTML === '') {
-                showIframeError(cleanUrl);
-            }
-        } catch (e) {
-            showIframeError(cleanUrl);
-        }
-    }, 5000);
-
-    dashboardFrame.onload = () => {
-        clearTimeout(loadTimeout);
-        loadingBar.classList.remove('active');
-    };
-
-    dashboardFrame.onerror = () => {
-        clearTimeout(loadTimeout);
-        loadingBar.classList.remove('active');
-        showIframeError(cleanUrl);
-    };
+    // Auto-launch the dashboard window
+    launchDashboardWindow(dashboard);
 
     // Update sidebar active
     $$('.nav-item').forEach(item => {
@@ -241,9 +209,35 @@ function openDashboard(dashboard) {
     closeSidebar();
 }
 
-function showIframeError(url) {
-    iframeError.classList.add('active');
-    $('#btnOpenDirect').onclick = () => window.open(url, '_blank');
+function launchDashboardWindow(dashboard) {
+    const url = buildDashboardUrl(dashboard);
+    const cleanUrl = buildCleanUrl(dashboard);
+
+    // Check if window already exists and is still open
+    const existingWindow = dashboardWindows[dashboard.id];
+    if (existingWindow && !existingWindow.closed) {
+        existingWindow.focus();
+        return;
+    }
+
+    // Open as a managed popup window (feels more app-like than a tab)
+    const width = Math.min(1400, screen.width - 100);
+    const height = Math.min(900, screen.height - 100);
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+
+    const win = window.open(
+        url,
+        `tpot_${dashboard.id}`,
+        `width=${width},height=${height},left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no`
+    );
+
+    if (win) {
+        dashboardWindows[dashboard.id] = win;
+        showToast(`${dashboard.name} geoeffnet`);
+    } else {
+        showToast('Pop-up wurde blockiert - bitte Pop-ups erlauben');
+    }
 }
 
 // ==================== Settings Modal ====================
@@ -370,20 +364,35 @@ function initEvents() {
     // Dashboard toolbar
     $('#btnBack').addEventListener('click', () => {
         state.currentDashboard = null;
-        dashboardFrame.src = 'about:blank';
         showScreen('home');
         $$('.nav-item').forEach(i => i.classList.remove('active'));
     });
 
     $('#btnRefresh').addEventListener('click', () => {
         if (state.currentDashboard) {
-            openDashboard(state.currentDashboard);
+            const win = dashboardWindows[state.currentDashboard.id];
+            if (win && !win.closed) {
+                try {
+                    win.location.reload();
+                } catch (e) {
+                    // Cross-origin, re-open
+                    launchDashboardWindow(state.currentDashboard);
+                }
+            } else {
+                launchDashboardWindow(state.currentDashboard);
+            }
         }
     });
 
-    $('#btnOpenExternal').addEventListener('click', () => {
+    $('#btnFullscreen').addEventListener('click', () => {
         if (state.currentDashboard) {
-            window.open(buildCleanUrl(state.currentDashboard), '_blank');
+            launchDashboardWindow(state.currentDashboard);
+        }
+    });
+
+    $('#btnLaunchDashboard').addEventListener('click', () => {
+        if (state.currentDashboard) {
+            launchDashboardWindow(state.currentDashboard);
         }
     });
 

@@ -47,7 +47,13 @@ fun TpotNavHost(
             DashboardViewScreen(
                 dashboardId = dashboardId,
                 connectionStore = connectionStore,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onSwitchDashboard = { newDashboardId ->
+                    // Replace current dashboard view with the new one
+                    navController.navigate(NavRoutes.dashboardView(newDashboardId)) {
+                        popUpTo(NavRoutes.HOME)
+                    }
+                }
             )
         }
     }

@@ -82,6 +82,10 @@
                 <span class="material-icons welcome-icon">shield</span>
                 <h1>T-Pot Dashboard</h1>
                 <p>Verbinde dich mit deinem T-Pot Honeypot Server um die Dashboards anzuzeigen.</p>
+                <div class="welcome-hint">
+                    <span class="material-icons">info_outline</span>
+                    <span>Fuer die beste Erfahrung nutze die <strong>Android App</strong> - sie bettet alle Dashboards nativ ein, ohne Browser-Einschraenkungen.</span>
+                </div>
                 <button class="btn-primary" id="btnSetupConnect">
                     <span class="material-icons">settings</span>
                     Server konfigurieren
@@ -114,7 +118,7 @@
             </div>
         </div>
 
-        <!-- Dashboard View -->
+        <!-- Dashboard View (direct navigation, no iframe) -->
         <div class="screen" id="screenDashboard">
             <div class="dashboard-toolbar">
                 <button class="btn-icon" id="btnBack">
@@ -127,21 +131,26 @@
                 <button class="btn-icon" id="btnRefresh">
                     <span class="material-icons">refresh</span>
                 </button>
-                <button class="btn-icon" id="btnOpenExternal">
-                    <span class="material-icons">open_in_new</span>
+                <button class="btn-icon" id="btnFullscreen">
+                    <span class="material-icons">fullscreen</span>
                 </button>
             </div>
-            <div class="iframe-container">
+            <div class="dashboard-embed-container">
                 <div class="loading-bar" id="loadingBar"></div>
-                <iframe id="dashboardFrame" sandbox="allow-same-origin allow-scripts allow-forms allow-popups"></iframe>
-                <div class="iframe-error" id="iframeError">
-                    <span class="material-icons">error_outline</span>
-                    <h3>Dashboard kann nicht geladen werden</h3>
-                    <p>Viele T-Pot Dashboards blockieren die Einbettung in iframes (X-Frame-Options). Oeffne das Dashboard direkt im Browser:</p>
-                    <button class="btn-primary" id="btnOpenDirect">
-                        <span class="material-icons">open_in_new</span>
-                        Im Browser oeffnen
-                    </button>
+                <div class="dashboard-launch" id="dashboardLaunch">
+                    <span class="material-icons launch-icon">open_in_browser</span>
+                    <h3>Dashboard wird geoeffnet</h3>
+                    <p>Das Dashboard wird in einem neuen Fenster geoeffnet und bleibt mit dieser App verbunden.</p>
+                    <div class="launch-actions">
+                        <button class="btn-primary" id="btnLaunchDashboard">
+                            <span class="material-icons">launch</span>
+                            Dashboard oeffnen
+                        </button>
+                    </div>
+                    <div class="launch-hint">
+                        <span class="material-icons">smartphone</span>
+                        <span>Tipp: Die <strong>Android App</strong> bettet alle Dashboards direkt ein - ohne separates Fenster.</span>
+                    </div>
                 </div>
             </div>
         </div>
