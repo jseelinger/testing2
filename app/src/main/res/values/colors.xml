@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="mci_orange">#FFFF6E40</color>
-    <color name="mci_amber">#FFFFAA00</color>
-    <color name="mci_black">#FF000000</color>
-    <color name="mci_dark_surface">#FF121212</color>
-    <color name="mci_white">#FFFFFFFF</color>
+    <color name="tpot_green">#FF00E676</color>
+    <color name="tpot_dark">#FF0D1117</color>
+    <color name="tpot_surface">#FF161B22</color>
+    <color name="tpot_red">#FFFF5252</color>
+    <color name="tpot_amber">#FFFFAB40</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>

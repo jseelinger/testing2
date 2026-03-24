@@ -13,5 +13,5 @@ dependencyResolution {
     }
 }
 
-rootProject.name = "MCI-Fitness"
+rootProject.name = "TPot-Dashboard"
 include(":app")
