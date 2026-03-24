@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "de.mcisolutions.app"
+    namespace = "de.tpot.dashboard"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "de.mcisolutions.app"
+        applicationId = "de.tpot.dashboard"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -75,6 +75,12 @@ dependencies {
 
     // DataStore for preferences
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // WebKit for WebView
+    implementation("androidx.webkit:webkit:1.9.0")
+
+    // Security for encrypted shared preferences
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // Debug
     debugImplementation("androidx.compose.ui:ui-tooling")

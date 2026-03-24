@@ -1,4 +1,4 @@
-// Top-level build file for MCI Fitness App
+// Top-level build file for T-Pot Dashboard App
 plugins {
     id("com.android.application") version "8.2.0" apply false
     id("org.jetbrains.kotlin.android") version "1.9.20" apply false
